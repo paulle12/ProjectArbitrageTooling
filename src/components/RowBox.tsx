@@ -62,7 +62,7 @@ const RowBox = ({ is_arbitrage, kalshiMarket, arbitrage_amount, polymarket }: Ma
             <p>{kalshiMarket.americanNoOdds}</p>
           </div>
            <a
-            href={`https://kalshi.com/markets/kxnflgame/professional-football-game/${market.event_ticker}`}
+            href={`https://kalshi.com/markets/kxnflgame/professional-football-game/${kalshiMarket.eventTicker}`}
             target="_blank"
             rel="noopener noreferrer"
             className="text-xs text-gray-500 hover:underline break-all"
@@ -90,7 +90,7 @@ const RowBox = ({ is_arbitrage, kalshiMarket, arbitrage_amount, polymarket }: Ma
            <p>{polymarket.americanNoOdds}</p>
           </div>
           <a
-            href={`https://polymarket.com/sports/nfl-2025/games/week/7/${market2.event_ticker}`}
+            href={`https://polymarket.com/sports/nfl-2025/games/week/7/${polymarket.eventTicker}`}
             target="_blank"
             rel="noopener noreferrer"
             className="text-xs text-gray-500 hover:underline break-all"
