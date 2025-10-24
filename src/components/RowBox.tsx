@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 
-const scoreColor = (score: String) =>
+const scoreColor = (score: string) =>
   Number(score) >= 0 ? "text-green-600" : "text-red-600";
 
 export interface MarketData {
