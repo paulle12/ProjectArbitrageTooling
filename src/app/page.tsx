@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import RowBox from "@/components/RowBox";
+import RowBox,{MarketData} from "@/components/RowBox";
 
 export default function ArbitrageInternal() {
 
-  const [arbitrage, setArbitrage] = useState([]);
+  const [arbitrage, setArbitrage] = useState<MarketData[]>([]);
 
   const fetchMatchingService = async () => {
     try {
@@ -34,10 +34,10 @@ export default function ArbitrageInternal() {
         return (
           <div key={`${arb.kalshiMarket.title}-${arb.kalshiMarket.ticker}-${arb.polymarket.title}`}>
            <RowBox
-            isArbitrage={arb.is_arbitrage}
-            market={arb.kalshiMarket}
-            arbitrageAmount={arb.arbitrage_amount.toFixed(2)}
-            market2={arb.polymarket}
+            is_arbitrage={arb.is_arbitrage}
+            kalshiMarket={arb.kalshiMarket}
+            arbitrage_amount={Number(arb.arbitrage_amount.toFixed(2))}
+            polymarket={arb.polymarket}
           />
           </div>
         )

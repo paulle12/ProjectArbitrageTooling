@@ -1,13 +1,41 @@
 import React from 'react';
 import Image from 'next/image';
 
-const scoreColor = (score: number) =>
-  score >= 0 ? "text-green-600" : "text-red-600";
+const scoreColor = (score: String) =>
+  Number(score) >= 0 ? "text-green-600" : "text-red-600";
+
+export interface MarketData {
+  kalshiMarket: Market;
+  polymarket: Market;
+  is_arbitrage: boolean;
+  arbitrage_amount: number;
+}
+
+export interface Market {
+  ticker: string;
+  eventTicker: string;
+  title: string;
+  category: string;
+  status: string;
+  openTime: string;   // ISO date string
+  closeTime: string;  // ISO date string
+  yesAskDollars: string;
+  noAskDollars: string;
+  americanYesOdds: string;
+  americanNoOdds: string;
+  orderBook: OrderBook | null;
+}
+
+export interface OrderBook {
+  yes_dollars: number[];
+  no_dollars: number[];
+}
+
 
 // think about adding in specific icons and debuffs think about how much screen space this will take
 // shift elements up 
 
-const RowBox = ({ isArbitrage, market, arbitrageAmount, market2 }: any) => {
+const RowBox = ({ is_arbitrage, kalshiMarket, arbitrage_amount, polymarket }: MarketData) => {
   return (
     <div className={`w-full p-6 rounded-xl border-2  shadow-md`}>
       <div className="flex items-stretch space-x-6">
@@ -21,17 +49,17 @@ const RowBox = ({ isArbitrage, market, arbitrageAmount, market2 }: any) => {
           </div>
         </div> */}
         <div className="flex flex-col justify-center w-full">
-          {market.title}
-          <div className={`flex justify-between text-sm w-40 ${scoreColor(market.americanYesOdds)}`}>
+          {kalshiMarket.title}
+          <div className={`flex justify-between text-sm w-40 ${scoreColor(kalshiMarket.americanYesOdds)}`}>
             <p>yes</p>
-            <p>{Number(market.yesAskDollars).toFixed(2)}</p>
-            <p>{market.americanYesOdds}</p>
+            <p>{Number(kalshiMarket.yesAskDollars).toFixed(2)}</p>
+            <p>{kalshiMarket.americanYesOdds}</p>
           </div>
 
-          <div className={`flex justify-between text-sm w-40 ${scoreColor(market.americanNoOdds)}`}>
+          <div className={`flex justify-between text-sm w-40 ${scoreColor(kalshiMarket.americanNoOdds)}`}>
             <p>no</p>
-            <p>{Number(market.noAskDollars).toFixed(2)}</p>
-            <p>{market.americanNoOdds}</p>
+            <p>{Number(kalshiMarket.noAskDollars).toFixed(2)}</p>
+            <p>{kalshiMarket.americanNoOdds}</p>
           </div>
            <a
             href={`https://kalshi.com/markets/kxnflgame/professional-football-game/${market.event_ticker}`}
@@ -47,19 +75,19 @@ const RowBox = ({ isArbitrage, market, arbitrageAmount, market2 }: any) => {
         {/* Vertical Divider */}
         <div className="w-[1px] self-stretch bg-cyan-400 rounded" />
 
-        {/* market2 */}
+        {/* polymarket */}
         <div className="flex flex-col justify-center w-full">
-          {market2.title}
-          <div className={`flex justify-between text-sm w-40 ${scoreColor(market2.americanYesOdds)}`}>
+          {polymarket.title}
+          <div className={`flex justify-between text-sm w-40 ${scoreColor(polymarket.americanYesOdds)}`}>
             <p>yes</p>
-            <p >{Number(market.yesAskDollars).toFixed(2)}</p>
-            <p>{market.americanYesOdds}</p>
+            <p >{Number(polymarket.yesAskDollars).toFixed(2)}</p>
+            <p>{polymarket.americanYesOdds}</p>
           </div>
 
-          <div className={`flex justify-between text-sm w-40 ${scoreColor(market2.americanNoOdds)}`}>
+          <div className={`flex justify-between text-sm w-40 ${scoreColor(polymarket.americanNoOdds)}`}>
            <p>no</p>
-           <p>{Number(market.noAskDollars).toFixed(2)}</p>
-           <p>{market.americanNoOdds}</p>
+           <p>{Number(polymarket.noAskDollars).toFixed(2)}</p>
+           <p>{polymarket.americanNoOdds}</p>
           </div>
           <a
             href={`https://polymarket.com/sports/nfl-2025/games/week/7/${market2.event_ticker}`}
@@ -73,12 +101,12 @@ const RowBox = ({ isArbitrage, market, arbitrageAmount, market2 }: any) => {
 
         {/* Score Block */}
         <div className={`flex w-1/10 items-center justify-center px-6 py-4 rounded-md border-2 text-2xl font-bold `}>
-          {arbitrageAmount}
+          {arbitrage_amount}
         </div>
         {/* Vertical Divider */}
         <div className="w-[1px] self-stretch bg-cyan-400 rounded" />
 
-         {isArbitrage ? (
+         {is_arbitrage ? (
             <span title="Main Role" className="text-green-400 text-xl">✔️</span>
           ) : (
             <span title="Not Main Role" className="text-gray-500 text-xl">❌</span>
